@@ -1,0 +1,39 @@
+PHẦN 1: PHÂN TÍCH LỖI
+
+1. Lỗi ở lệnh: mkdir Shopee Projects
+- Tên thư mục có khoảng trắng nhưng chưa đặt trong dấu ngoặc kép.
+- PowerShell hiểu "Shopee" và "Projects" là hai đối số khác nhau nên báo lỗi:
+  A positional parameter cannot be found that accepts argument "Projects".
+- Sửa thành: mkdir "Shopee Projects"
+
+2. Lỗi ở lệnh: cd Shopee Projects
+- Lệnh cd cũng có tên thư mục chứa khoảng trắng nhưng chưa đặt trong dấu ngoặc kép.
+- Vì vậy PowerShell không hiểu đúng tên thư mục và có thể báo lỗi tham số.
+- Sửa thành: cd "Shopee Projects"
+
+3. Lỗi do chuỗi lệnh phía trước bị sai
+- Khi lệnh tạo hoặc di chuyển vào thư mục Shopee Projects bị lỗi,
+  các lệnh phía sau có thể không đứng đúng thư mục cần thao tác.
+- Khi đó PowerShell có thể báo:
+  Cannot find path "..." because it does not exist.
+- Cần tạo thư mục và di chuyển vào đúng vị trí trước khi thao tác với src.
+
+4. Lệnh sao chép cần bảo đảm thư mục nguồn tồn tại
+- Lệnh Copy-Item src -Destination src-backup -Recurse về cú pháp là đúng.
+- Tuy nhiên thư mục src phải được tạo thành công trước đó.
+- Nếu src không tồn tại, PowerShell sẽ báo Cannot find path.
+
+
+PHẦN 2: HOÀN THIỆN
+
+Chuỗi lệnh PowerShell trong đúng 3 dòng:
+
+mkdir "Shopee Projects"
+cd "Shopee Projects"
+mkdir src\assets\images; Copy-Item src -Destination src-backup -Recurse
+
+
+KẾT QUẢ
+- Tạo thư mục dự án Shopee Projects.
+- Di chuyển vào thư mục dự án.
+- Tạo cấu trúc src\assets\images và sao chép toàn bộ thư mục src thành src-backup.
